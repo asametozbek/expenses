@@ -1,0 +1,77 @@
+﻿@model Entity.Spending
+
+<form id="kt_createMember_form" action="#">
+    <div asp-validation-summary="All" class="text-danger" id="validateee"></div>
+
+    <div class="form-group row me-3">
+        <label for="SpendingArea" class="col-sm-3 col-form-label"><b>Alan adı:</b></label>
+        <div class="col-sm-9">
+            <input type="text" autocomplete="off" asp-for="SpendingArea" name="SpendingArea" id="SpendingArea" class="form-control">
+            <span asp-validation-for="SpendingArea" class="text-danger"></span>
+        </div>
+    </div>
+<br />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success" id="createSpendings">Kaydet</button>
+    </div>
+
+</form>
+
+    <script type="text/javascript">
+        $('#createSpendings').click(function () {
+            //do something
+            var data = {
+                "spendingArea": $("#SpendingArea").val(),
+            };
+                     $.ajax({
+                         url: '@Url.Action("_CreateOrEdit", "Spendings")',
+                         type: "post",                                              
+                         data: data,
+                           success: function (result) {
+                           debugger;
+                               if (result.success) {
+                                   $("#myModal").modal("hide");
+
+                                   //document.getElementById("firstName").value = result.data.firstName;
+                                   //document.getElementById("lastName").value = result.data.firstName;
+                                   //document.getElementById("Email").value = result.data.firstName;
+                                   //document.getElementById("validateee").value = result.data.firstName;
+                                   //window.location = "/Home/Index"
+                                   Swal.fire({
+                                       text: result.data,
+                                       icon: "success",
+                                       buttonsStyling: !1,
+                                       confirmButtonText: "İşlem başarılı!",
+                                       customClass: {
+                                           confirmButton: "btn btn-primary"
+                                       }
+
+                                   })
+                                   window.setTimeout(function () { location.reload() }, 3000)
+                                   //location.reload();
+
+                               }
+
+                               else
+                                   debugger;
+                               var span = "";
+                               span = $.each(result.data, function (key, value) {
+                                   span + ' ' + value + "</br>"
+                               });
+                                   Swal.fire({
+                                       html: span,
+                                            icon: "error",
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "İşlem başarısız oldu!",
+                                            customClass: {
+                                                confirmButton: "btn btn-primary"
+                                            }
+                                        })
+                          }
+                   });
+
+      });
+    </script>
+
+

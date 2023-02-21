@@ -1,0 +1,103 @@
+﻿@model Entity.Expense
+
+<form id="kt_createMember_form" action="#">
+    <div asp-validation-summary="All" class="text-danger" id="validateee"></div>
+
+    
+
+    <div class="form-group row mb-3">
+        <label for="Description" class="col-sm-3 col-form-label">Açıklama</label>
+        @*<label class="col-md-3 col-form-label">Açıklama</label>*@
+        <div class="col-sm-9">
+            <input type="text" autocomplete="off" asp-for="Description" name="Description" id="Description" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label for="Amount" class="col-sm-3 col-form-label">Tutar</label>
+        <div class="col-sm-9">
+            <input type="text" autocomplete="off" asp-for="Amount" name="Amount" id="Amount" class="form-control">
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group row mb-3">
+        <label for="SpendingId" class="col-sm-3 col-form-label">Masraf türü</label>
+        <div class="col-sm-9">
+            <select name="SpendingId" asp-for="SpendingId" class="form-control" asp-items="@ViewBag.masrafAlan"></select>
+           
+        </div>
+    </div>
+    @*<div class="form-group row">
+        <label for="HouseholdId" class="col-sm-3 col-form-label">Harcama yapan</label>
+        <div class="col-sm-9">
+            <select name="HouseholdId" asp-for="HouseholdId" class="form-control" asp-items="@ViewBag.masrafKisi"></select>
+
+        </div>
+    </div>*@
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success" id="createExpense">Kaydet</button>
+    </div>
+</form>
+
+    <script type="text/javascript">
+
+
+        $('#createExpense').click(function () {
+            //do something
+            debugger;
+            var data = {
+                "description": $("#Description").val(),
+                "amount": $("#Amount").val().replace('.',','),
+                "spendingId": $("#SpendingId").val(),
+                "householdId": $("#HouseholdId").val()
+            };
+                     $.ajax({
+                         url: '@Url.Action("_CreateOrEdit", "Expense")',
+                         type: "post",                                              
+                         data: data,
+                           success: function (result) {
+                           debugger;
+                               if (result.success) {
+                                   $("#myModal").modal("hide");
+
+                                   //document.getElementById("firstName").value = result.data.firstName;
+                                   //window.location = "/Home/Index"
+                                   Swal.fire({
+                                       text: result.data,
+                                       icon: "success",
+                                       buttonsStyling: !1,
+                                       confirmButtonText: "İşlem başarılı!",
+                                       customClass: {
+                                           confirmButton: "btn btn-primary"
+                                       }
+
+                                   })
+                                   window.setTimeout(function () { location.reload() }, 3000)
+                                   //location.reload();
+
+                               }
+
+                               else 
+                                   debugger;
+                               var span = "";
+                               span = $.each(result.data, function (key, value) {
+                                   span + ' ' + value + "</br>"
+                               });
+                                   Swal.fire({
+                                       html: span,
+                                            icon: "error",
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "İşlem başarısız oldu!",
+                                            customClass: {
+                                                confirmButton: "btn btn-primary"
+                                            }
+                                        })
+                          }
+                   });
+
+      });
+    </script>
+
+

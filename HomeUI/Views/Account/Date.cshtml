@@ -1,0 +1,21 @@
+﻿@using HomeUI.Models
+@model Deneme
+@{
+    ViewData["Title"] = "Date";
+    Layout = null;
+}
+
+<h1>Date</h1>
+@if (Model != null)
+{
+    @if (Model.date != null)
+    {
+        <p>@Model.date.Value.ToString("dd MMMM yyyy");</p>
+        <p>@Model.date1</p>
+    }
+}
+
+<form asp-action="Date" asp-controller="Account" method="post">
+    <input type="text" name="date" />
+    <button>gönder</button>
+</form>

@@ -1,0 +1,198 @@
+﻿@model HomeIndexVModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="section dashboard">
+    <div class="row">
+
+
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+
+
+                <div class="card-body">
+                    <h5 class="card-title">Harcamalar <span>| Bugün</span></h5>
+
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bx bx-money"></i>
+                        </div>
+                        <div class="">
+                            <h6 style="margin-left:10px!important">₺@Model.TodayExpense.ToString("0.00")</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- End Sales Card -->
+        <!-- Revenue Card -->
+        <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+
+
+
+                <div class="card-body">
+                    <h5 class="card-title">Harcamalar <span>| Son 7 Gün</span></h5>
+
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bx bx-money"></i>
+                        </div>
+                        <div class="">
+                            <h6 style="margin-left:10px!important">₺@Model.WeekedExpense.ToString("0.00")</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- End Revenue Card -->
+        <!-- Customers Card -->
+        <div class="col-xxl-4 col-xl-12">
+
+            <div class="card info-card customers-card">
+
+
+
+                <div class="card-body">
+                    <h5 class="card-title">Harcamalar <span>| Son 1 Ay</span></h5>
+
+
+
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bx bx-money"></i>
+                        </div>
+                        <div class="">
+                            <h6 style="margin-left:10px!important">₺@Model.MonthlyExpense.ToString("0.00")</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</section>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover">
+                   
+                        <thead>
+                            <tr>
+                                <th scope="col">İsim</th>
+                                <th scope="col">Toplam Harcama</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.userExpenses)
+                            {
+                                <tr>
+
+                                    <td>@item.User</td>
+                                    <td>@item.Amount</td>
+                                </tr>
+                            }
+                        </tbody>
+                  
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Grafik</h5>
+
+                <!-- Bar Chart -->
+                <div id="barChart" style="min-height: 300px; -webkit-tap-highlight-color: transparent; user-select: none;" class="echart" _echarts_instance_="ec_1643487939900"><div style="position: relative; width: 560px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="560" height="400" style="position: absolute; left: 0px; top: 0px; width: 560px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div></div>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        echarts.init(document.querySelector("#barChart")).setOption({
+                            xAxis: {
+                                type: 'category',
+                                data: ['Paz', 'Sal', 'Çar', 'Thu', 'Fri', 'Sat', 'Sun']
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [{
+                                data: [120, 200, 150, 80, 70, 110, 130],
+                                type: 'bar'
+                            }]
+                        });
+                    });</script>
+                <!-- End Bar Chart -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <form id="search" asp-action="Detay" asp-controller="Home" method="post" role="form" style="border:0">
+        <div class="row">
+            <div class="col-md-3">
+
+                <strong>Begin Date</strong>
+
+                <input type="date" class="form-control" name="BeginDate" id="dateFrom" />
+
+            </div>
+
+            <div class="col-md-3">
+
+                <strong>End Date</strong>
+
+                <input type="date" class="form-control" name="EndDate" id="dateTo" />
+
+            </div>
+
+            <div class="col-md-3">
+                <br />
+
+
+                <button class="btn btn-primary" type="submit" id="getJsonSrc">Search</button>
+
+            </div>
+        </div>
+    </form>
+
+    <!-- Row -->
+
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<table class="table table-hover table-dark">
+    <thead>
+        <tr>
+            <th scope="col">İsim</th>
+            <th scope="col">Açıklama</th>
+            <th scope="col">Tutar</th>
+            <th scope="col">Harcama</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Expenses)
+        {
+            <tr>
+                <td>@item.Household.FirstName</td>
+                <th scope="row">@item.Description</th>
+                <td>@item.Amount</td>
+                <td>@item.Spending.SpendingArea</td>
+            </tr>
+        }
+    </tbody>
+</table>

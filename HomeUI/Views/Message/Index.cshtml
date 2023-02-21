@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+
+    h2 {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+        color: #fff;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .chat-container {
+        background: #ece9e6;
+        background: linear-gradient(to right, #ece9e6, #ffffff);
+        /*width: 320px;*/
+        max-width: 100%;
+        border-radius: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+        overflow: hidden;
+        padding: 15px;
+        position: relative;
+    }
+
+    .chat {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .message {
+        border-radius: 50px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+        .message.left {
+            padding: 15px 20px 15px 70px;
+            background-color: #fff;
+            border: 2px solid #cccccc;
+            text-align: left;
+        }
+
+        .message.right {
+            align-self: flex-end;
+            padding: 15px 70px 15px 20px;
+            background-color: #4b802f;
+            color: #fff;
+            text-align: right;
+        }
+
+    .avatar {
+        border-radius: 50%;
+        object-fit: cover;
+        position: absolute;
+        left: 10px;
+        top: -10px;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #b8c4cc;
+    }
+
+    .message.right .avatar {
+        left: auto;
+        right: 10px;
+        border-color: #5C8049;
+    }
+
+    .message p {
+        margin: 0;
+    }
+
+    .text_input {
+        font-size: 1rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 15px;
+        width: 100%;
+    }
+
+    // Video tutorial/codealong here: https://youtu.be/fCpw5i_2IYU
+    $blue: #74b9ff;
+
+    body {
+        //background-image: url('https://images.unsplash.com/photo-1560568082-c15188aa6510?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3300&q=80');
+        background-color: #3498db;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+
+    .profile-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 40px;
+    }
+</style>
+
+
+<div class="row">
+
+
+    <div class="col-3 border-right">
+
+        <div class="row friend-drawer friend-drawer--onhover">
+            <div class="col-3">
+                <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
+            </div>
+
+            <div class="col-8">
+                <h6>Robo Cop</h6>
+                <p class="text-muted">Hey, you're arrested!</p>
+            </div>
+            <span class="time text-muted small">13:21</span>
+        </div>
+        <hr>
+    </div>
+
+    <div class="col-9 chat-container">
+        <h2>Sarah</h2>
+        <ul class="chat">
+            <li class="message left">
+                <img class="avatar"
+                     src="https://randomuser.me/api/portraits/women/17.jpg"
+                     alt="" />
+                <p>Hello, I've found your friend's phone.</p>
+            </li>
+            <li class="message right">
+                <img class="avatar"
+                     src="https://randomuser.me/api/portraits/men/67.jpg"
+                     alt="" />
+                <p>Which of my friends are you talking about? :-)</p>
+            </li>
+            <li class="message left">
+                <img class="avatar"
+                     src="https://randomuser.me/api/portraits/women/17.jpg"
+                     alt="" />
+                <p>The one whose name is at the top of your screen right now.</p>
+            </li>
+            <li class="message right">
+                <img class="avatar"
+                     src="https://randomuser.me/api/portraits/men/67.jpg"
+                     alt="" />
+                <p>Yes, right, of course :-)</p>
+            </li>
+            <li class="message left">
+                <img class="avatar"
+                     src="https://randomuser.me/api/portraits/women/17.jpg"
+                     alt="" />
+                <p>Can you tell her that I've found her phone?</p>
+            </li>
+            <li class="message right">
+                <img class="avatar"
+                     src="https://randomuser.me/api/portraits/men/67.jpg"
+                     alt="" />
+                <p>Sure</p>
+            </li>
+            <li class="message right">
+                <img class="avatar"
+                     src="https://randomuser.me/api/portraits/men/67.jpg"
+                     alt="" />
+                <p>Some girl says she's got your phone.</p>
+            </li>
+        </ul>
+
+        @*<input type="text" class="text_input" placeholder="Message..." />*@
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" style="border:1px solid #4b802f" placeholder="Search">
+            <div class="input-group-append">
+                <button style="border-radius:10%;font-size:20px;font-weight:bold" class="btn btn-success" type="submit">Gönder</button>
+            </div>
+        </div>
+
+    </div>
+</div>

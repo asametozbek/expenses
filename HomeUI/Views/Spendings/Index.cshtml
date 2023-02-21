@@ -1,0 +1,164 @@
+﻿@model IEnumerable<Entity.Spending>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container">
+
+        <button class="btn btn-primary view" data-target="/Spendings/_CreateOrEdit/0">Alan Ekle</button>
+    
+    <br />
+    <br />
+    <div class="row table-responsive">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Harcama Alanı</th>
+                        <th scope="col">Tarih</th>
+
+                        <th scope="col">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.Id</th>
+                            <td>@item.SpendingArea</td>
+                            <td>@item.CreatedDate.ToString("dd mm yyyy")</td>
+                            <td>
+                                @*  <a href="#" class="view" data-target="/Expense/_CreateOrEdit/@item.Id">Düzenle</a>*@
+                                <button type="button" class="btn btn-warning view" data-target="/Spendings/_CreateOrEdit/@item.Id"><i style="font-size:20px" class="bx bxs-edit-alt"></i></button>
+                                @*<button type="button" class="btn btn-success"><span class="fas fa-edit"></span>Göster</button>*@
+                                <button type="button" class="btn btn-danger deleteExpense" data-id="@item.Id"><span class=""></span><i class="ri-delete-bin-2-fill"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            
+            </div>
+            <div class="modal-body">
+
+            </div>
+      
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            // a tagimizde bulunan .view classımıza click olduğunda
+            $("body").on("click", ".view", function () {
+                //data-target dan url mizi al
+                debugger;
+                var url = $(this).data("target");
+                //bu urlimizi post et
+                $.get(url, function (data) { debugger; })
+
+                    //eğer işlemimiz başarılı bir şekilde gerçekleşirse
+                    .done(function (data) {
+                        //gelen datayı .modal-body mizin içerise html olarak ekle
+                        $("#myModal .modal-body").html(data);
+                        //sonra da modalimizi göster
+                        $("#myModal").modal("show");
+                    })
+                    //eğer işlem başarısız olursa
+                    .fail(function () {
+                        //modalımızın bodysine Error! yaz
+                        $("#modelView .modal-body").text("Error!!");
+                        //sonra da modalimizi göster
+                        $("#modelView").modal("show");
+                    })
+
+            });
+        })
+    </script>
+
+    <script>
+
+        $(".deleteExpense").click(function () {
+            //do something
+            var dataId = $(this).attr("data-id");
+            var data = {
+                "Id": dataId
+            };
+            debugger;
+
+
+
+            Swal.fire({
+                title: 'Silmek istediğinizden emin misiniz?',
+                showConfirmButton: true, showCancelButton: true,
+                confirmButtonText: 'Evet',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                cancelButtonText: 'Hayır'
+
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                   $.ajax({
+                         url: '@Url.Action("Delete", "Spendings")',
+                         type: "post",
+                         data: data,
+                           success: function (result) {
+                           debugger;
+                               if (result.success) {
+                                   Swal.fire({
+                                       text: result.mesaj,
+                                       icon: "success",
+                                       buttonsStyling: !1,
+                                       confirmButtonText: "İşlem başarılı!",
+                                       customClass: {
+                                           confirmButton: "btn btn-primary"
+                                       }
+
+                                   })
+                                   window.setTimeout(function () { location.reload() }, 3000)
+                                   //location.reload();
+
+                               }
+
+                               else
+                                   Swal.fire({
+                                       text: result.mesaj,
+                                            icon: "error",
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "İşlem başarısız oldu!",
+                                            //confirmButtonText: result.data[0],
+                                            customClass: {
+                                                confirmButton: "btn btn-primary"
+                                            }
+                                        })
+                               //document.getElementById("validateee").value = result.mesaj;
+                           // window.location.href = "@@Url.Action("Index", "Login")";
+                          }
+                   });
+                }
+
+
+            });
+        });
+
+
+    </script>
+}
+

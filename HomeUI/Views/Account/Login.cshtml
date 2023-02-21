@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+<link href="~/css/login.css" rel="stylesheet" />
+
+<link href="~/css/login.css" rel="stylesheet" />
+<div class="background-wrap">
+    <div class="background"></div>
+</div>
+<h1>@ViewBag.ms</h1>
+<div class="loginform">
+    <h1 id="litheader">EVİM EVİM</h1>
+    <div class="inset">
+        <p>
+            <input type="text" name="username" id="username" placeholder="Kullanıcı Adı">
+        </p>
+        <p>
+            <input type="password" name="password" id="password" placeholder="Şifre">
+        </p>
+        <div style="text-align: center;">
+            <div class="checkboxouter">
+                <input type="checkbox" name="rememberme" id="remember" value="Remember">
+                <label class="checkbox"></label>
+            </div>
+            <label for="remember">Beni unutma</label>
+        </div>
+        <input class="loginLoginValue" type="hidden" name="service" value="login" />
+    </div>
+    <p class="p-container">
+        <input type="submit" name="Login" id="loginBtn" value="Giriş">
+    </p>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/login.js"></script>
+
